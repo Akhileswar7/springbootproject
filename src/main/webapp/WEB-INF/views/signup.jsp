@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Login Page</title>
+    <title>Sign Up Page</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,15 +41,15 @@
             color: black;
         }
 
-        .login-container {
-            flex: 1; /* Take up remaining space */
+        .signup-container {
+            flex: 1; 
             display: flex;
             justify-content: center;
-            align-items: center; /* Center login container vertically */
-            padding: 20px; /* Add padding for spacing */
+            align-items: center;
+            padding: 20px; 
         }
 
-        .login-box {
+        .signup-box {
             width: 400px;
             background-color: white;
             padding: 40px;
@@ -109,16 +109,31 @@
             text-align: center;
             padding: 10px;
         }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #3cb371;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <%@ include file="homeHeader.jsp" %>
 
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Admin Login</h2>
-		
-			 <%
+    <div class="signup-container">
+        <div class="signup-box">
+            <h2>Sign Up</h2>
+
+            <%
                 String errorMessage = (String) request.getAttribute("message");
                 if (errorMessage != null) {
             %>
@@ -126,10 +141,16 @@
             <%
                 }
             %>
-            <form action="/safehomes/AdminLogin" method="get">
+
+            <form action="/safehomes/userSignup" method="post">
                 <div class="input-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
 
                 <div class="input-group">
@@ -137,8 +158,11 @@
                     <input type="password" id="password" name="password" required>
                 </div>
 
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn">Sign Up</button>
 
+                <div class="login-link">
+                    <p>Already have an account? <a href="userlogin.jsp">Login</a></p>
+                </div>
             </form>
         </div>
     </div>

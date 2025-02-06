@@ -42,11 +42,11 @@
         }
 
         .login-container {
-            flex: 1; /* Take up remaining space */
+            flex: 1; 
             display: flex;
             justify-content: center;
-            align-items: center; /* Center login container vertically */
-            padding: 20px; /* Add padding for spacing */
+            align-items: center;
+            padding: 20px; 
         }
 
         .login-box {
@@ -109,6 +109,20 @@
             text-align: center;
             padding: 10px;
         }
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .signup-link a {
+            color: #3cb371;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -116,7 +130,7 @@
 
     <div class="login-container">
         <div class="login-box">
-            <h2>Admin Login</h2>
+            <h2>User Login</h2>
 		
 			 <%
                 String errorMessage = (String) request.getAttribute("message");
@@ -126,10 +140,10 @@
             <%
                 }
             %>
-            <form action="/safehomes/AdminLogin" method="get">
+            <form action="/safehomes/userLogin" method="get">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="username">Email</label>
+                    <input type="text" id="username" name="useremail" required>
                 </div>
 
                 <div class="input-group">
@@ -138,7 +152,9 @@
                 </div>
 
                 <button type="submit" class="btn">Login</button>
-
+				 <div class="signup-link">
+                <p>Don't have an account? <a href="signup.jsp">Sign up</a></p>
+            </div>
             </form>
         </div>
     </div>

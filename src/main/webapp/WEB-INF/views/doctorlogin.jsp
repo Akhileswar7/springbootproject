@@ -116,7 +116,7 @@
 
     <div class="login-container">
         <div class="login-box">
-            <h2>Admin Login</h2>
+            <h2>Doctor Login</h2>
 		
 			 <%
                 String errorMessage = (String) request.getAttribute("message");
@@ -126,10 +126,10 @@
             <%
                 }
             %>
-            <form action="/safehomes/AdminLogin" method="get">
+            <form action="/safehomes/DoctorLogin" method="get">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
                 </div>
 
                 <div class="input-group">

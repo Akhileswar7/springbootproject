@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*,com.safehomes.website.programs.Database"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SAFE HOMES</title>
-   <style>
-        .feature-container {
+<title>DOCTOR HOME</title>
+<style>
+         .feature-container {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap; 
-            margin-top: 40px;
-            padding-left:80px;
-            padding-right:80px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            gap: 50px; 
         }
         .feature-box {
            width:500px;
@@ -37,10 +37,28 @@
             font-size: 32px;
             text-align: center;
         }
+        .s{
+        	text-decoration:none;
+        	font-size:30px;
+        	 color: #333;
+        }
+       .error{
+       text-align:center;
+       font-size:22px;
+       margin-top:10px;
+       }
     </style>
 </head>
 <body>
-<%@ include file="homeHeader.jsp" %>
+    <%@ include file="userHeader.jsp" %>
+     <%
+		 String errorMessage = (String) request.getAttribute("message");
+                if (errorMessage != null) {
+            %>
+                <div class="error"><%= errorMessage %></div>
+            <%
+                }
+            %>
 <div class="container">
         <h2 style="text-align: center; margin-top: 20px;">Key Features of our Hospital</h2>
         <div class="feature-container">
@@ -62,6 +80,5 @@
 </div>
         </div>
     </div>
-<%@ include file="homefooter.jsp" %>
 </body>
 </html>

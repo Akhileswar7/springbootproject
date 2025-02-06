@@ -1,22 +1,18 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="com.safehomes.website.programs.Database"%>
-<%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="java.sql.*,com.safehomes.website.programs.Database"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>SAFE HOMES</title>
-   <style>
-        .feature-container {
+<title>DOCTOR HOME</title>
+<style>
+         .feature-container {
             display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap; 
-            margin-top: 100px;
-            padding-left:80px;
-            padding-right:80px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 50px;
+            gap: 50px; 
         }
         .feature-box {
            width:500px;
@@ -54,10 +50,9 @@
     </style>
 </head>
 <body>
-<%@ include file="adminHeader.jsp" %>
-			 <%
-			 
-                String errorMessage = (String) request.getAttribute("message");
+    <%@ include file="doctorheader.jsp" %>
+     <%
+		 String errorMessage = (String) request.getAttribute("message");
                 if (errorMessage != null) {
             %>
                 <div class="error"><%= errorMessage %></div>
@@ -68,42 +63,32 @@
         <div class="feature-container">
          
 			<div class="feature-box">
-			   <a href="addDoctor.jsp" class="s">DOCTORS</a><br>
+			   <h3 class="s">DOCTORS</h3><br>
 			   <%
 			   	Connection connection=Database.getConnection();
-			   	Statement statement=connection.createStatement();
-			   	ResultSet doctorscount=statement.executeQuery("select count(*) from doctors");
+			   PreparedStatement preparedStatement=connection.prepareStatement("SELECT COUNT(*), MAX(doctor_id) FROM doctors WHERE email = ?");
+			   	String email=(String)session.getAttribute("email");
+			   	preparedStatement.setString(1, email);
+			   	ResultSet doctorscount=preparedStatement.executeQuery();
 			   	doctorscount.next();
 			   %>
 			  	<div class="s"><%= doctorscount.getInt(1) %></div>
 			</div>		
+			
 			<div class="feature-box">
-			  <h3 class="s">PATIENTS</h3>
-			    <%
-			   	ResultSet patienscount=statement.executeQuery("select count(*) from patients");
-			   	patienscount.next();
-			   %>
-			  	<div class="s"><%= patienscount.getInt(1) %></div>
-			</div>
-			<div class="feature-box">
-			   <h3 class="s">APPOINTMENTS</h3>
+			    <h3 class="s">APPOINTMENTS</h3><br>
 			   <%
-			   	ResultSet appointments=statement.executeQuery("select count(*) from appointments");
+			   	PreparedStatement stmt=connection.prepareStatement("select count(*) from appointments where doctor_id=?");
+			   int doctor_id=doctorscount.getInt(2);
+			   stmt.setInt(1, doctor_id);
+			   ResultSet appointments=stmt.executeQuery();
 			   appointments.next();
 			   %>
 			   <div class="s"><%= appointments.getInt(1) %></div>
 			</div>
-			<div class="feature-box">
-			    <a href="addSpecialist.jsp" class="s">SPECIALISTS</a><br>
-			     <%
-			   	ResultSet specialist=statement.executeQuery("select count(*) from specialist");
-			     specialist.next();
-			   %>
-			  	<div class="s"><%= specialist.getInt(1) %></div>
-			</div>
+			
 		
         </div>
     </div>
-<%@ include file="homefooter.jsp" %>
 </body>
 </html>

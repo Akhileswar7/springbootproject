@@ -32,14 +32,11 @@
 </head>
 <body>
 <div class="navbar">
-        <h2><a href="home.jsp"> SAFE HOMES</a></h2>
-         <a href="adminhome.jsp">HOME</a>
-         <a href="addDoctor.jsp">DOCTOR</a>
-         <a href="viewDoctors.jsp">VIEW DOCTORS</a>
-         <a href="viewPatients.jsp">VIEW PATIENTS</a>
-         <a href="viewAppointments.jsp">VIEW APPOINTMENTS</a>
+        <h2><a href="userhome.jsp"> SAFE HOMES</a></h2>
+         <a href="createAppointment.jsp">APPOINTMENTS</a>
+         <a href="viewUserAppointments.jsp">VIEW APPOINTMENTS</a>
          <div class="navbar-right">
-         <a href="/safehomes/adminlogout">LOGOUT</a>
+         <a href="/safehomes/userlogout">LOGOUT</a>
          </div>
          
          

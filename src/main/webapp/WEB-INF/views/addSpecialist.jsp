@@ -116,28 +116,14 @@
 
     <div class="login-container">
         <div class="login-box">
-            <h2>Admin Login</h2>
-		
-			 <%
-                String errorMessage = (String) request.getAttribute("message");
-                if (errorMessage != null) {
-            %>
-                <div class="error"><%= errorMessage %></div>
-            <%
-                }
-            %>
-            <form action="/safehomes/AdminLogin" method="get">
+
+            <form action="/safehomes/addSpeciality" method="get">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
+                    <label for="username">Speciality</label>
+                    <input type="text" id="speciality" name="speciality" required>
                 </div>
 
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-
-                <button type="submit" class="btn">Login</button>
+                <button type="submit" class="btn">Add</button>
 
             </form>
         </div>

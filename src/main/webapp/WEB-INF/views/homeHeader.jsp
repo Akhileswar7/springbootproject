@@ -33,12 +33,12 @@
 </head>
 <body>
 <div class="navbar">
-        <h2><a href="/index">SAFE HOMES</a></h2>
+        <h2><a href="index.jsp">SAFE HOMES</a></h2>
          <a>Search</a>
         <div class="navbar-right">
-            <a href="/adminlogin">ADMIN</a>
-            <a href="/doctorlogin">DOCTOR</a>
-            <a href="/userlogin">USER</a>
+            <a href="adminlogin.jsp">ADMIN</a>
+            <a href="doctorlogin.jsp">DOCTOR</a>
+            <a href="userlogin.jsp">USER</a>
         </div>
     </div>
 </body>
