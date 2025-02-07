@@ -1,11 +1,3 @@
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.ResultSetMetaData"%>
-<%@page import="com.safehomes.website.programs.Database"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,89 +8,119 @@
         body {
             font-family: Arial, sans-serif;
         }
-        h2{
-        	text-align:center;
+        h2 {
+            text-align: center;
         }
-
         .table-container {
             padding-left: 5%;
             padding-right:5%;
             margin: 0 auto;
         }
-
         table {
             width: 100%;
             border-collapse: collapse;
         }
-
         th, td {
             padding: 10px;
             text-align: left;
         }
-
         th {
             background-color: #a0a0a0;
         }
-
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
         .btn {
-		    display: inline-block; 
-		    padding: 12px 20px; 
-		    font-size: 16px; 
-		    font-weight: bold; 
-		    color: #fff;
-		    background-color: #007bff; 
-		    border: none; 
-		    border-radius: 5px; 
-		    cursor: pointer; 
-		    text-align: center; 
-		    text-decoration: none;
-		}
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+        }
+        .edit-btn {
+            background-color: #007bff;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+        }
     </style>
 </head>
 <body>
-<%@ include file="adminHeader.jsp" %>
+    <%@ include file="adminHeader.jsp" %>
 
     <h2>DOCTOR DETAILS</h2>
-	<br>
+    <br>
     <div class="table-container">
-        <table>
+        <table id="doctorTable">
             <thead>
-            <%
-            Connection connection=Database.getConnection();
-		   	Statement statement=connection.createStatement();
-		   	ResultSet resultSet=statement.executeQuery("select * from doctors");
-		    ResultSetMetaData metaData = resultSet.getMetaData();
-            %>
                 <tr>
-                <% for(int i=2;i <= metaData.getColumnCount();i++) { %>
-                    <th><%=  metaData.getColumnName(i) %></th>
-                 <% } %>
-                 <th>Actions</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Specialization</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-              <%
-			   	while(resultSet.next()) {
-              %>
-			  	<tr>
-                    <% for(int i=2;i <= metaData.getColumnCount();i++) { %>
-                    <td><%= resultSet.getString(i) %></td>
-                 <% } %>
-                    <td>
-					    <a href="editDoctor.jsp?id=<%= resultSet.getInt(1) %>"><button class="btn">Edit</button></a>
-					    <a href="/safehomes/deleteDoctor?id=<%= resultSet.getInt(1) %>"><button class="btn">Delete</button></a>
-					</td>
-                </tr>	
-                <% 
-                	}
-			   	%>   
+                <!-- Data will be inserted here dynamically -->
             </tbody>
         </table>
     </div>
-<%@ include file="homefooter.jsp" %>
+
+    <%@ include file="homefooter.jsp" %>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            fetch("/api/doctors")
+                .then(response => response.json())
+                .then(data => {
+                    let tableBody = document.querySelector("#doctorTable tbody");
+                    tableBody.innerHTML = ""; // Clear existing data
+                    
+                    data.forEach(doctor => {
+                        let row = document.createElement("tr");
+                        row.innerHTML = `
+                            <td>${doctor.id}</td>
+                            <td>${doctor.name}</td>
+                            <td>${doctor.specialization}</td>
+                            <td>${doctor.phone}</td>
+                            <td>${doctor.email}</td>
+                            <td>
+                                <button class="btn edit-btn" onclick="editDoctor(${doctor.id})">Edit</button>
+                                <button class="btn delete-btn" onclick="deleteDoctor(${doctor.id})">Delete</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error("Error fetching doctor data:", error));
+        });
+
+        function deleteDoctor(id) {
+            if (confirm("Are you sure you want to delete this doctor?")) {
+                fetch(`/api/doctors/${id}`, {
+                    method: "DELETE",
+                })
+                .then(response => {
+                    if (response.ok) {
+                        alert("Doctor deleted successfully.");
+                        location.reload(); // Refresh the page
+                    } else {
+                        throw new Error("Error deleting doctor.");
+                    }
+                })
+                .catch(error => alert(error.message));
+            }
+        }
+
+        function editDoctor(id) {
+            window.location.href = `/editDoctor.jsp?id=${id}`;
+        }
+    </script>
 
 </body>
 </html>
